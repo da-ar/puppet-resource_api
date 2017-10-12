@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'SecureRandom'
 require 'tempfile'
 
 RSpec.describe 'calling a Command' do
@@ -13,9 +14,9 @@ RSpec.describe 'calling a Command' do
   describe '#run(context, *args, **kwargs)' do
     it 'executes a command' do
       pending '(PDK-590) some encoding issues' if Gem.win_platform?
-      File.delete '/tmp/söme_file' if File.exist? '/tmp/söme_file'
-      touch_cmd.run(context, '/tmp/söme_file')
-      expect(File).to be_exist('/tmp/söme_file')
+      random_path = File.join(Dir.tmpdir, "söme_file#{SecureRandom.hex(10)}")
+      touch_cmd.run(context, random_path)
+      expect(File).to be_exist(random_path)
     end
 
     it 'doesn\'t provide input to a command' do
