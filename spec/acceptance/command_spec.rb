@@ -13,7 +13,6 @@ RSpec.describe 'calling a Command' do
 
   describe '#run(context, *args, **kwargs)' do
     it 'executes a command' do
-      pending '(PDK-590) some encoding issues' if Gem.win_platform?
       random_path = File.join(Dir.tmpdir, "söme_file#{SecureRandom.hex(10)}")
       touch_cmd.run(context, random_path)
       expect(File).to be_exist(random_path)
